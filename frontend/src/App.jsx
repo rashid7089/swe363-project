@@ -1,5 +1,5 @@
 import './App.css'
-import SignUp from './signUp/signUp'
+import SignUp from './router/auth'
 
 function App() {
   // const [count, setCount] = useState(0)
