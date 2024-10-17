@@ -1,13 +1,12 @@
-import reactLogo from './assets/react.svg'
 import './App.css'
+import SignUp from './signUp/signUp'
 
 function App() {
   // const [count, setCount] = useState(0)
 
   return (
     <div>
-      <img src={reactLogo} alt="react logo" />
-      <h1>hello</h1>
+      <SignUp />
     </div>
   )
 }
