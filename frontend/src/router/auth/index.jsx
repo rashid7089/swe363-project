@@ -1,5 +1,5 @@
-import "./style.css";
 import { useState } from "react";
+
 
 function SignUp() {
     let [currentPage, setCurrentPage] = useState(0);
