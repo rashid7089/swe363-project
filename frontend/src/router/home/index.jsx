@@ -1,7 +1,7 @@
 function Template() {
     return ( 
         <div>
-            Template
+            Home
         </div>
      );
 }

@@ -1,9 +1,10 @@
-function Template() {
+function ViewProject() {
     return ( 
         <div>
-            Template
+            View Project
+            <a href="/auth">auth</a>
         </div>
      );
 }
 
-export default Template;
+export default ViewProject;

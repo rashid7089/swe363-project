@@ -2,7 +2,7 @@
 function AddProject() {
     return ( 
         <div>
-            fdsa
+            add project
         </div>
      );
 }
