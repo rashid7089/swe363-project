@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-// import Navbar from './navbar'
+import Navbar from './navbar'
 
 // pages
 import AddProject from './router/addProject'
@@ -15,10 +15,12 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navbar />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/add-project" element={<AddProject />} />
+        <Route path="/view-project" element={<ViewProject />} />
+      </Route>
       <Route path="/auth" element={<Auth />} />
-      <Route path="/add-project" element={<AddProject />} />
-      <Route path="/view-project" element={<ViewProject />} />
     </Routes>
   )
 }

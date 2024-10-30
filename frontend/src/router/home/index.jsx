@@ -1,25 +1,9 @@
-import React from 'react';
+// import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ProjectShowcase() {
   return (
-    <div>
-      {/* Header */}
-      <nav className="navbar navbar-expand-lg navbar-light bg-success">
-        <div className="container-fluid">
-          <a className="navbar-brand text-white" href="#">Project Showcase</a>
-          <div className="collapse navbar-collapse">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <a className="nav-link text-white" href="#">Home</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link text-white" href="#">Add Project</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+    <div>      
 
       {}
       <div className="container my-4">

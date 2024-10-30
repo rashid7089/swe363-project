@@ -1,0 +1,9 @@
+.navbar {
+    padding: 0 2rem;
+    .navbar__title {
+        color: white;
+        font-weight: 700;
+        text-transform: capitalize;
+        margin-right: 2rem;
+    }
+}
