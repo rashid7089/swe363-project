@@ -12,13 +12,13 @@ function ProjectShowcase() {
   ];
 
   return (
-    <div className="bg-dark text-white min-vh-100">
+    <div className="bg-white text-dark min-vh-100">
       {/* Navbar */}
       <nav className="navbar navbar-light bg-success">
         <div className="container-fluid">
-          <span className="navbar-brand mb-0 h1 text-white">Project Showcase</span>
           <div className="d-flex">
-          
+           
+ 
           </div>
         </div>
       </nav>
@@ -29,7 +29,7 @@ function ProjectShowcase() {
           <div className="col-md-6">
             <select className="form-select">
               <option>Major</option>
-              <option>CHE</option>
+              <option>COE</option>
               <option>SWE</option>
               <option>CS</option>
             </select>
