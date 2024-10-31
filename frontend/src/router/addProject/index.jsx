@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import '/Users/nawafalserhani/development/flutter/swe363-project-1/frontend/src/router/addProject/addP.css';
+import './addP.css';
 function AddProject() {
   
       
