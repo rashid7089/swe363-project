@@ -49,6 +49,7 @@ function ProjectShowcase() {
       {/* Project Cards */}
       <div className="container">
         <div className="row">
+<<<<<<< Updated upstream
           {projects.map((project) => (
             <div className="col-md-4 mb-4" key={project.id}>
               <Link to={`/project/${project.id}`} className="text-decoration-none text-dark">
@@ -65,6 +66,16 @@ function ProjectShowcase() {
                   </div>
                 </div>
               </Link>
+=======
+          {/* Example Project Card */}
+          <div className="col-md-4 mb-4">
+            <div className="card">
+              <img src="" className="card-img-top" alt="Project" />
+              <div className="card-body">
+                <h5 className="card-title">Project Title</h5>
+                <p className="card-text">Company/Team Name</p>
+              </div>
+>>>>>>> Stashed changes
             </div>
           ))}
         </div>
