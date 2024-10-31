@@ -18,8 +18,7 @@ function ProjectShowcase() {
         <div className="container-fluid">
           <span className="navbar-brand mb-0 h1 text-white">Project Showcase</span>
           <div className="d-flex">
-            <Link to="/" className="text-white mx-2">Home</Link>
-            <Link to="/add-project" className="text-white">Add Project</Link>
+          
           </div>
         </div>
       </nav>
