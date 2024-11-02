@@ -62,4 +62,32 @@
     text-align: left;
 
   }
- 
+  .error{
+    
+    position: fixed; /* Keeps it anchored at the bottom-right */
+width: 80%; /* Width now scales with the viewport */
+max-width: 600px; /* Sets a maximum width */
+min-width: 150px; /* Sets a minimum width */
+height: 50px; /* Standard error message height */
+right: 0; /* Positions at the right edge of the viewport */
+bottom: 0; /* Positions at the bottom edge of the viewport */
+
+box-sizing: border-box;
+background: #CB8D98;
+border: 3px solid #981B32;
+border-radius: 20px;
+display: flex;
+align-items: center;
+justify-content: center; /* Centers text inside */
+
+/* Text styling */
+font-family: 'JetBrains Mono';
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 120%;
+letter-spacing: -0.02em;
+color: #FFFFFF;
+
+
+  }
