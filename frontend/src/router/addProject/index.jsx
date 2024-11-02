@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './addP.css';
 
 function AddProject() {
-  const [formData, setFormData] = useState({  //creat a fucking use state to store them 
+  const [formData, setFormData] = useState({  
     title: '',
     teammatesN: '',
     teammatesM: '',
