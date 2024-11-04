@@ -1,6 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 
-function FeedbackForm() {
+function FeedbackForm() { // feedback form webpage
+  
+  const [feedback, setFeedback] = useState(""); // State to store feedback
+
+  const handleInputChange = (event) => {
+    setFeedback(event.target.value); // Update feedback state with input value
+  };
+
+  const handleSubmit = () => {
+    alert(`Feedback submitted: ${feedback}`); // Display feedback on submit
+    setFeedback(""); // Clear the input field after submission
+  };
+
   return (
     <div style={styles.container}>
       <div style={styles.modal}>
