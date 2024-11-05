@@ -14,10 +14,9 @@ function ViewProject() {
         contributors: ["Mohammed Ali", "Saeed Ahmed", "Khaled Al-Ghamdi"],
         title: "UAV Obstacle Detection and avoidance",
         term: "241",
-        description: `The UAV Obstacle Detection and Avoidance project, developed by Boeing, 
-        represents a significant advancement in autonomous aerial vehicle technology.
-        This initiative aims to create unmanned aerial vehicles capable of navigating complex environments independently, 
-        detecting potential obstacles, and executing evasive maneuvers without human intervention.Hardware Development:
+        summury:`The UAV Obstacle Detection and Avoidance project, developed by Boeing, represents a significant advancement in autonomous aerial vehicle technology.
+            This initiative aims to create unmanned aerial vehicles capable of navigating complex environments independently, detecting potential obstacles, and executing evasive maneuvers without human intervention.` ,
+        description: `Hardware Development:
         Designing and building the UAV platform Integrating sensors (e.g., cameras, LiDAR, ultrasonic sensors)
         Implementing onboard computing systems Software Development: 
         Creating algorithms for real-time obstacle detection Developing path planning and navigation systems Implementing avoidance maneuvers Testing and Validation:
@@ -41,16 +40,16 @@ function ViewProject() {
     function Header({ problem, major, publishDate, contributors }) {
         return (
             <div className="px-5 py-5">
-                <p className="fw-bold">{problem}</p>
+                <p className="fw-bold fs-5">{problem}</p>
                 <div className="d-flex justify-content-start mb-2">
-                    <p className="me-3 mb-0"><strong>Major:</strong> {major}</p>
-                    <p className="mb-0"><strong>Publish Date:</strong> {publishDate}</p>
+                    <p className="me-3 fw-light fs-5"><strong>Major:</strong> {major}</p>
+                    <p className="fw-light fs-5"><strong>Publish Date:</strong> {publishDate}</p>
                 </div>
                 <hr className="border border-1 border-secondary border-dark" />
-                <p><strong>Contributors:</strong></p>
+                <p className='fs-3 fw-light'><strong>Contributors:</strong></p>
                 <div className="d-flex flex-wrap gap-4">
                     {contributors.map((contributor, index) => (
-                        <p key={index} className="mb-0">{contributor}</p>
+                        <p key={index} className="mb-0 fs-4 fw-light">{contributor}</p>
                     ))}
                 </div>
             </div>
@@ -59,47 +58,51 @@ function ViewProject() {
 
     function Content() {
         return (
-            <div className='container mt-3' style={{ marginLeft: 0 }}>
-                <div className='mb-4'>
+            <div className='container mt-3' style={{ marginLeft: 40 }}>
+                <div>
                     <img 
                         src={image1} 
                         alt="Project image" 
                         className="img-fluid" 
-                        style={{ maxWidth: '50%', height: 'auto', float: 'left', marginRight: '15px' }} 
-                        onClick={() => handleImageClick(image1)} // Click to open modal
+                        style={{ maxWidth: '30%', height: 'auto', float: 'left', marginRight: '15px', marginBottom: '10px', marginTop: '-20px' }} 
+                        onClick={() => handleImageClick(image1)} 
                     />
-                    <div style={{ overflow: 'hidden' }}>
-                        <h5 className="mb-5">{project.title}</h5> {/* Increased bottom margin */}
-                        <p className="mb-4"><strong>Term:</strong> {project.term}</p> {/* Increased bottom margin */}
-                        <p>{project.description}</p>
-                    </div>
                 </div>
+                <div className='mb-4' style={{ overflow: 'hidden' }}>
+                    <h5 className="mb-5 ms-5 fs-2">{project.title}</h5> 
+                    <p className="mb-5 ms-5 fs-5 fw-light"><strong>Term:</strong> {project.term}</p> 
+                    <p className='mb-4 ms-5 fs-5 fw-light'>{project.summury}</p>
+                </div>
+    
                 <div className="d-flex flex-column" style={{ clear: 'both' }}>
                     <div className='d-flex'>
                         <img 
                             src={image2} 
                             alt="Project image" 
-                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px' }} 
-                            onClick={() => handleImageClick(image2)} // Click to open modal
+                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }} 
+                            onClick={() => handleImageClick(image2)} 
                         />
                         <img 
                             src={image3} 
                             alt="Project image" 
-                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px' }} 
-                            onClick={() => handleImageClick(image3)} // Click to open modal
+                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }} 
+                            onClick={() => handleImageClick(image3)} 
                         />
                         <img 
                             src={image4} 
                             alt="Project image" 
-                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px' }} 
-                            onClick={() => handleImageClick(image4)} // Click to open modal
+                            style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }} 
+                            onClick={() => handleImageClick(image4)} 
                         />
                         <img 
                             src={image5} 
                             alt="Project image" 
-                            style={{ maxWidth: '100px', cursor: 'pointer' }} 
-                            onClick={() => handleImageClick(image5)} // Click to open modal
+                            style={{ maxWidth: '100px', cursor: 'pointer', marginTop: '-10px' }} 
+                            onClick={() => handleImageClick(image5)} 
                         />
+                    </div>
+                    <div className='mt-5 fs-5 fw-light'>
+                        <p>{project.description}</p>
                     </div>
                 </div>
     
@@ -117,6 +120,7 @@ function ViewProject() {
             </div>
         );
     }
+    
     
 
     return (
