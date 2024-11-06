@@ -1,138 +1,100 @@
 import { useState } from 'react';
-import './addP.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './addP.css'; // Make sure this path is correct relative to your file structure
 
 function AddProject() {
-  const [formData, setFormData] = useState({  
-    title: '',
-    teammatesN: '',
-    teammatesM: '',
-    description: '',
-    photo: null,
-    projectDate: '',
-  });
+  const [title, setTitle] = useState('');
+  const [teammatesN, setTeammatesN] = useState('');
+  const [teammatesM, setTeammatesM] = useState('');
+  const [projectDate, setProjectDate] = useState('');
+  const [description, setDescription] = useState('');
+  const [showError, setShowError] = useState(false);
 
-  const [errors, setErrors] = useState({});
-  const [submittedData, setSubmittedData] = useState(null);
-   
-  const handleChange = (e) => {
-    const { name, value, type, files } = e.target;
-    setFormData({
-      ...formData,
-      [name]: type === 'file' ? files[0] : value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const newErrors = {};
-
-    if (!formData.title) newErrors.title = "Title is required"
-    else if (!formData.teammatesN) newErrors.teammatesN = "Teammate's names are required"
-    else if (!formData.teammatesM) newErrors.teammatesM = "Teammate's majors are required"
-    else if (!formData.description) newErrors.description = "Description is required";
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setTimeout(() => {
-        setErrors({});
-      }, 5000);
+  const handleSubmit = () => {
+    if (!description) {
+      setShowError(true); // Show error if description is empty
       return;
     }
 
-    setSubmittedData(formData);
-    setFormData({
-      title: '',
-      teammatesN: '',
-      teammatesM: '',
-      description: '',
-      photo: null,
-      projectDate: '',
-    });
-    setErrors({});
+    // Handle project upload logic here
+    console.log("Project submitted:", { title, teammatesN, teammatesM, projectDate, description });
   };
 
   return (
     <div className="Container">
       <h1>Add a New KFUPM Senior Project</h1>
-      <form onSubmit={handleSubmit}>
-        <section className="form-group">
-          <label htmlFor="title">
-            <strong>Title:</strong>
-          </label>
-          <input
-            type="text"
-            placeholder="Please Enter The Title"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-          />
-          {errors.title && <div className="error">{errors.title}</div>}
 
-          <label htmlFor="teammatesN">
-            <strong>Teammate's Names:</strong>
-          </label>
-          <input
-            type="text"
-            placeholder="Comma Separated"
-            id="teammatesN"
-            name="teammatesN"
-            value={formData.teammatesN}
-            onChange={handleChange}
-          />
-          {errors.teammatesN && <div className="error">{errors.teammatesN}</div>}
+      {/* Alert for form errors */}
+      {showError && (
+        <div className="error" role="alert">
+          Description is required.
+          <button type="button" className="btn-close" onClick={() => setShowError(false)} aria-label="Close"></button>
+        </div>
+      )}
 
-          <label htmlFor="teammatesM">
-            <strong>Teammate's Majors:</strong>
-          </label>
-          <input
-            type="text"
-            placeholder="Comma Separated"
-            id="teammatesM"
-            name="teammatesM"
-            value={formData.teammatesM}
-            onChange={handleChange}
-          />
-          {errors.teammatesM && <div className="error">{errors.teammatesM}</div>}
+      <section className="form-group">
+        <label htmlFor="title">
+          <strong>Title:</strong>
+        </label>
+        <input 
+          type="text" 
+          placeholder="Please Enter The Title" 
+          id="title" 
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
 
-          <label htmlFor="photo">
-            <strong>Project's Image(s):</strong>
-          </label>
-          <input
-            type="file"
-            id="photo"
-            name="photo"
-            onChange={handleChange}
-          />
+        <label htmlFor="teammatesN">
+          <strong>Teammate's Names:</strong>
+        </label>
+        <input 
+          type="text" 
+          placeholder="Comma Separated" 
+          id="teammatesN" 
+          value={teammatesN}
+          onChange={(e) => setTeammatesN(e.target.value)}
+        />
 
-          <label htmlFor="projectDate">
-            <strong>Project Date:</strong>
-          </label>
-          <input
-            type="date"
-            id="projectDate"
-            name="projectDate"
-            value={formData.projectDate}
-            onChange={handleChange}
-          />
+        <label htmlFor="teammatesM">
+          <strong>Teammate's Majors:</strong>
+        </label>
+        <input 
+          type="text" 
+          placeholder="Comma Separated" 
+          id="teammatesM" 
+          value={teammatesM}
+          onChange={(e) => setTeammatesM(e.target.value)}
+        />
 
-          <label htmlFor="description">
-            <strong>Description:</strong>
-          </label>
-          <input
-            className='disc'
-            type="text"
-            placeholder="Enter Your Notes"
-            id="description"
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-          />
-          {errors.description && <div className="error">{errors.description}</div>}
-        </section>
+        <label htmlFor="photo">
+          <strong>Project's Image(s):</strong>
+        </label>
+        <input type="file" id="photo" />
 
-        <button type="submit">Upload The Project</button>
-      </form>
+        <label htmlFor="projectDate">
+          <strong>Project Date:</strong>
+        </label>
+        <input 
+          type="date" 
+          id="projectDate" 
+          value={projectDate}
+          onChange={(e) => setProjectDate(e.target.value)}
+        />
+
+        <label htmlFor="description">
+          <strong>Description:</strong>
+        </label>
+        <input 
+          className="disc" 
+          type="text" 
+          placeholder="Enter Your Notes" 
+          id="description" 
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+      </section>
+
+      <button onClick={handleSubmit}>Upload The Project</button>
     </div>
   );
 }
