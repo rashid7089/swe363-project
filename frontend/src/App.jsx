@@ -18,7 +18,7 @@ function App() {
       <Route path="/" element={<Navbar />}>
         <Route path="/" element={<Home />} />
         <Route path="/add-project" element={<AddProject />} />
-        <Route path="/view-project" element={<ViewProject />} />
+        <Route path="/view-project/:id" element={<ViewProject />} />
       </Route>
       <Route path="/auth" element={<Auth />} />
     </Routes>

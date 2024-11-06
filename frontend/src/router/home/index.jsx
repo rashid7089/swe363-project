@@ -50,7 +50,7 @@ function ProjectShowcase() {
         <div className="row">
           {projects.map((project) => (
             <div className="col-md-4 mb-4" key={project.id}>
-              <Link to={`/project/${project.id}`} className="text-decoration-none text-dark">
+              <Link to={`/view-Project/${project.id}`} className="text-decoration-none text-dark">
                 <div className="card h-100">
                   <img 
                     src={project.img} 
