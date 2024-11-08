@@ -1,7 +1,11 @@
 import { useState } from 'react';
+<<<<<<< Updated upstream
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './addP.css'; // Make sure this path is correct relative to your file structure
 
+=======
+import './addP.css';
+>>>>>>> Stashed changes
 function AddProject() {
   const [title, setTitle] = useState('');
   const [teammatesN, setTeammatesN] = useState('');
