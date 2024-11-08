@@ -1,104 +1,98 @@
 import { useState } from 'react';
-<<<<<<< Updated upstream
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './addP.css'; // Make sure this path is correct relative to your file structure
-
-=======
+import Form from 'react-bootstrap/Form';
 import './addP.css';
->>>>>>> Stashed changes
+
 function AddProject() {
+  const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState('');
   const [teammatesN, setTeammatesN] = useState('');
   const [teammatesM, setTeammatesM] = useState('');
   const [projectDate, setProjectDate] = useState('');
   const [description, setDescription] = useState('');
-  const [showError, setShowError] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = () => {
-    if (!description) {
-      setShowError(true); // Show error if description is empty
-      return;
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      console.log("Project submitted:", { title, teammatesN, teammatesM, projectDate, description });
+      setShowSuccess(true);
     }
-
-    // Handle project upload logic here
-    console.log("Project submitted:", { title, teammatesN, teammatesM, projectDate, description });
+    setValidated(true);
   };
 
   return (
-    <div className="Container">
-      <h1>Add a New KFUPM Senior Project</h1>
-
-      {/* Alert for form errors */}
-      {showError && (
-        <div className="error" role="alert">
-          Description is required.
-          <button type="button" className="btn-close" onClick={() => setShowError(false)} aria-label="Close"></button>
-        </div>
-      )}
-
-      <section className="form-group">
-        <label htmlFor="title">
-          <strong>Title:</strong>
-        </label>
-        <input 
-          type="text" 
-          placeholder="Please Enter The Title" 
-          id="title" 
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-
-        <label htmlFor="teammatesN">
-          <strong>Teammate's Names:</strong>
-        </label>
-        <input 
-          type="text" 
-          placeholder="Comma Separated" 
-          id="teammatesN" 
-          value={teammatesN}
-          onChange={(e) => setTeammatesN(e.target.value)}
-        />
-
-        <label htmlFor="teammatesM">
-          <strong>Teammate's Majors:</strong>
-        </label>
-        <input 
-          type="text" 
-          placeholder="Comma Separated" 
-          id="teammatesM" 
-          value={teammatesM}
-          onChange={(e) => setTeammatesM(e.target.value)}
-        />
-
-        <label htmlFor="photo">
-          <strong>Project's Image(s):</strong>
-        </label>
-        <input type="file" id="photo" />
-
-        <label htmlFor="projectDate">
-          <strong>Project Date:</strong>
-        </label>
-        <input 
-          type="date" 
-          id="projectDate" 
-          value={projectDate}
-          onChange={(e) => setProjectDate(e.target.value)}
-        />
-
-        <label htmlFor="description">
-          <strong>Description:</strong>
-        </label>
-        <input 
-          className="disc" 
-          type="text" 
-          placeholder="Enter Your Notes" 
-          id="description" 
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-      </section>
-
-      <button onClick={handleSubmit}>Upload The Project</button>
+    <div className="auth">
+      <Form className="auth__form" noValidate validated={validated} onSubmit={handleSubmit}>
+        <h1>Add a New KFUPM Senior Project</h1>
+        <Form.Group className="mb-2" controlId="formTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Please Enter The Title"
+            isInvalid={!title && validated}
+          />
+          <Form.Control.Feedback type="invalid">Title is required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formTeammatesN">
+          <Form.Label>Teammate's Names</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={teammatesN}
+            onChange={(e) => setTeammatesN(e.target.value)}
+            placeholder="Comma Separated"
+            isInvalid={!teammatesN && validated}
+          />
+          <Form.Control.Feedback type="invalid">Teammate's names are required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formTeammatesM">
+          <Form.Label>Teammate's Majors</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={teammatesM}
+            onChange={(e) => setTeammatesM(e.target.value)}
+            placeholder="Comma Separated"
+            isInvalid={!teammatesM && validated}
+          />
+          <Form.Control.Feedback type="invalid">Teammate's majors are required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formProjectDate">
+          <Form.Label>Project Date</Form.Label>
+          <Form.Control
+            type="date"
+            required
+            value={projectDate}
+            onChange={(e) => setProjectDate(e.target.value)}
+            isInvalid={!projectDate && validated}
+          />
+          <Form.Control.Feedback type="invalid">Project date is required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            isInvalid={!description && validated}
+          />
+          <Form.Control.Feedback type="invalid">Description is required.</Form.Control.Feedback>
+        </Form.Group>
+        <button type="submit" className="auth__form__submit btn btn-primary">Upload The Project</button>
+        {showSuccess && (
+          <div className="alert alert-success mt-3" role="alert">
+            Project has been successfully added!
+          </div>
+        )}
+      </Form>
     </div>
   );
 }

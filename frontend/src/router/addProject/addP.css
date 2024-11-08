@@ -1,84 +1,93 @@
-/* Centering the main container */
-.Container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* Centers the entire form on the page */
-  width: 100%; /* Allows container to take up full width of the page */
-  max-width: 804px; /* Keeps content within a set width */
-  margin: 0 auto; /* Horizontally centers Container */
-  text-align: left; /* Aligns text within labels to the left */
+import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import './addP.css';
+
+function AddProject() {
+  const [validated, setValidated] = useState(false);
+  const [title, setTitle] = useState('');
+  const [teammatesN, setTeammatesN] = useState('');
+  const [teammatesM, setTeammatesM] = useState('');
+  const [projectDate, setProjectDate] = useState('');
+  const [description, setDescription] = useState('');
+  
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    } else {
+      console.log("Project submitted:", { title, teammatesN, teammatesM, projectDate, description });
+    }
+    setValidated(true);
+  };
+
+  return (
+    <div className="auth">
+      <Form className="auth__form" noValidate validated={validated} onSubmit={handleSubmit}>
+        <h1>Add a New KFUPM Senior Project</h1>
+        <Form.Group className="mb-2" controlId="formTitle">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Please Enter The Title"
+            isInvalid={!title && validated}
+          />
+          <Form.Control.Feedback type="invalid">Title is required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formTeammatesN">
+          <Form.Label>Teammate's Names</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={teammatesN}
+            onChange={(e) => setTeammatesN(e.target.value)}
+            placeholder="Comma Separated"
+            isInvalid={!teammatesN && validated}
+          />
+          <Form.Control.Feedback type="invalid">Teammate's names are required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formTeammatesM">
+          <Form.Label>Teammate's Majors</Form.Label>
+          <Form.Control
+            type="text"
+            required
+            value={teammatesM}
+            onChange={(e) => setTeammatesM(e.target.value)}
+            placeholder="Comma Separated"
+            isInvalid={!teammatesM && validated}
+          />
+          <Form.Control.Feedback type="invalid">Teammate's majors are required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formProjectDate">
+          <Form.Label>Project Date</Form.Label>
+          <Form.Control
+            type="date"
+            required
+            value={projectDate}
+            onChange={(e) => setProjectDate(e.target.value)}
+            isInvalid={!projectDate && validated}
+          />
+          <Form.Control.Feedback type="invalid">Project date is required.</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className="mb-2" controlId="formDescription">
+          <Form.Label>Description</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            required
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            isInvalid={!description && validated}
+          />
+          <Form.Control.Feedback type="invalid">Description is required.</Form.Control.Feedback>
+        </Form.Group>
+        <button type="submit" className="auth__form__submit btn btn-primary">Upload The Project</button>
+      </Form>
+    </div>
+  );
 }
 
-/* Form group styling to align labels and inputs */
-.form-group {
-  width: 100%;
-}
-
-/* Heading styling */
-h1 {
-  font-family: 'Montserrat';
-  font-weight: 700;
-  font-size: 35px;
-  color: #1E1E1E;
-  text-align: center;
-  margin-bottom: 30px;
-  margin-top: 10px;
-}
-
-/* Input styling to align text to the left */
-input {
-  width: 100%;
-  height: 55px;
-  padding: 0 8px;
-  margin: 10px 0;
-  text-align: left;
-}
-
-/* Button styling to center within the container */
-button {
-  width: 100%; /* Matches width of inputs */
-  height: 53px;
-  background: #008540;
-  border: 1px solid #008540;
-  border-radius: 8px;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.disc {
-  width: 100%;
-  height: 90px;
-  padding: 0 8px;
-  margin: 10px 0;
-  text-align: left;
-}
-
-.error {
-  position: fixed; /* Keeps it anchored at the bottom-right */
-  width: 80%; /* Width now scales with the viewport */
-  max-width: 600px; /* Sets a maximum width */
-  min-width: 150px; /* Sets a minimum width */
-  height: 50px; /* Standard error message height */
-  right: 0; /* Positions at the right edge of the viewport */
-  bottom: 20px; /* Adjusts vertical position */
-  box-sizing: border-box;
-  background: #CB8D98;
-  border: 3px solid #981B32;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* Centers text inside */
-
-  /* Text styling */
-  font-family: 'JetBrains Mono';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  line-height: 120%;
-  letter-spacing: -0.02em;
-  color: #FFFFFF;
-}
+export default AddProject;

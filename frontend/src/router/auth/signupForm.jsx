@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 function LoginForm({ validated, handleSubmit }) {
+
     return ( 
         <Form className="auth__form" noValidate validated={validated} onSubmit={handleSubmit} >
             <h1>Sign Up</h1>
@@ -51,6 +52,7 @@ function LoginForm({ validated, handleSubmit }) {
 }
 
 LoginForm.propTypes = {
+    
     validated: PropTypes.bool,
     handleSubmit: PropTypes.func
 }
