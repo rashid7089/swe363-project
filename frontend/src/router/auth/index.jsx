@@ -1,36 +1,55 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import './style.css';
+import LoginForm from "./loginForm";
+import SignUpForm from "./signupForm";
+import ResetPassword from "./resetPassword";
+import { useLocation } from 'react-router-dom';
 
+function SignUp({setSelectedPage}) {
+    const [validated, setValidated] = useState(false);
+    const [currentPageIndex, setCurrentPageIndex] = useState(0);
+    let location = useLocation();
 
-function SignUp() {
-    let [currentPage, setCurrentPage] = useState(0);
-    // 0 = sign up, 1 = login
-    let [title, setTitle] = useState("sign up");
-    let [otherTitle, setOtherTitle] = useState("login");
+    // 0 - login
+    // 1 - sign up
+    // 2 - forget password
 
-    function changeToOtherPage() {
-        setCurrentPage(currentPage == 0 ? 1 : 0);
-
-        if (currentPage == 0) {
-            setTitle("login");
-            setOtherTitle("sign up");
+    useEffect(() => {
+        if (setSelectedPage == "signup") {
+          setCurrentPageIndex(1);
+        }
+        else if (setSelectedPage == "forget-password") {
+          setCurrentPageIndex(2);
         }
         else {
-            setTitle("sign up");
-            setOtherTitle("login");
+          setCurrentPageIndex(0);
         }
+      }, [location])
+
+
+    const handlePageChange = (pageIndex) => {
+        setCurrentPageIndex(pageIndex);
+        setValidated(false);
     }
 
-    // condition ? true : false
+    const handleSubmitLogin = (event) => {
+        const form = event.currentTarget;
+        if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        }
+
+        setValidated(true);
+    };
+
+
     return ( 
         <div className="auth">
-            <h1>{title}</h1>
-            {currentPage == 1 ? <input placeholder="name" /> : ""}
-            <input placeholder="username" />
-            <input placeholder="password" />
-            <button >submit</button>
-            <button onClick={changeToOtherPage} >change to {otherTitle}</button>
+            {currentPageIndex == 0 && <LoginForm validated={validated} handleSubmit={handleSubmitLogin} /> }
+            {currentPageIndex == 1 && <SignUpForm validated={validated} handleSubmit={handleSubmitLogin} /> }
+            {currentPageIndex == 2 && <ResetPassword validated={validated} handleSubmit={handleSubmitLogin} /> }
         </div>
-     );
+    );
 }
 
 export default SignUp;

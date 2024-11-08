@@ -15,7 +15,7 @@ function ViewProject() {
         {
             id: 1,
             problem: "Swe Project to solve water problems",
-            major: "SWE",
+            major: "Software Engineering",
             publishDate: "2024-03-02",
             contributors: ["Mohammed Ali", "Saeed Ahmed", "Khaled Al-Ghamdi"],
             title: "UAV Obstacle Detection and avoidance",
@@ -33,30 +33,55 @@ function ViewProject() {
         },
         {
             id: 2,
-            problem: "",
-            major: "",
+            problem: "SWE project to promote sustainable fashion and reduce textile waste.",
+            major: "Software Engineering",
             publishDate: "2024-03-02",
-            contributors: ["Mohammed Ali", "Saeed Ahmed", "Khaled Al-Ghamdi"],
-            title: "UAV Obstacle Detection and Avoidance - Project 2",
+            contributors: ["Aisha Al-Zahrani", "Fahad Al-Dosari", "Ahmed Al-Shehri"],
+            title: "Swapp – The Clothing Swapping App",
             term: "242",
-            summury: `The UAV Obstacle Detection and Avoidance project, developed by Boeing, represents a significant advancement in autonomous aerial vehicle technology.
-                This initiative aims to create unmanned aerial vehicles capable of navigating complex environments independently, detecting potential obstacles, and executing evasive maneuvers without human intervention.`,
-            description: `This is the description for project 2.`,
+            summury: `The Swapp project introduces a mobile application designed to facilitate clothing exchange among users. 
+                By providing a platform for sustainable fashion choices, Swapp helps reduce the environmental impact of textile waste and promotes a circular fashion economy.`,
+            description:`Project Development:
+                Designing and building the mobile application platform, with user-friendly interfaces and secure accounts.
+                Implementing features for users to list, browse, and exchange clothing items directly through the app.
+                Developing location-based matching for users to connect locally and reduce transportation costs and emissions.
+                
+                Testing and User Feedback:
+                Conducting usability tests to enhance user experience and optimize the exchange process.
+                Gathering feedback to continuously improve app features, interface, and performance.
+                
+                Impact and Application:
+                The Swapp app targets eco-conscious users looking for sustainable and cost-effective fashion alternatives. 
+                By promoting clothing exchange, it aims to reduce waste and foster community-driven sustainability efforts.`,
             images: [image6] // Only one image for project with id 2
         }
 ,
         {
             id: 3,
-            problem: "",
-            major: "",
+            
+            problem: "Design and implement an effective patio awning to enhance outdoor spaces for College of Engineering facilities.",
+            major: "Civil Engineering",
             publishDate: "2024-03-02",
-            contributors: ["Mohammed Ali", "Saeed Ahmed", "Khaled Al-Ghamdi"],
-            title: "Project 3",
+            contributors: ["Ahmed Al-Farsi", "Sara Al-Mutairi", "Hassan Al-Bishi"],
+            title: "EDI Patio Awning Design Team 1",
             term: "242",
-            summury: `The UAV Obstacle Detection and Avoidance project, developed by Boeing, represents a significant advancement in autonomous aerial vehicle technology.
-                This initiative aims to create unmanned aerial vehicles capable of navigating complex environments independently, detecting potential obstacles, and executing evasive maneuvers without human intervention.`,
-            description: `This is the description for project 2.`,
+            summury: `The EDI Patio Awning Design project focuses on creating a durable and aesthetically pleasing outdoor awning for the College of Engineering. 
+                This design enhances the usability of outdoor spaces, providing shade and comfort for students and faculty.`,
+            description: `Project Development:
+                            Designing an awning structure that balances aesthetics with durability, suitable for various weather conditions.
+                            Selecting appropriate materials to ensure long-term performance, stability, and minimal maintenance.
+                            Conducting structural analyses to confirm the awning's resilience and safety under different loads.
+                            
+                            Testing and Validation:
+                            Prototyping the design and running simulations to verify strength and material suitability.
+                            Gathering feedback from stakeholders to refine the design and address specific facility needs.
+                            
+                            Impact and Application:
+                            This project aims to create comfortable outdoor spaces that encourage more activity in the College of Engineering's outdoor facilities.
+                            By providing shade and weather protection, the awning design contributes to an enhanced learning and relaxation environment.`,
             images: [image6] // Only one image for project with id 2
+        
+            
         }
 
 

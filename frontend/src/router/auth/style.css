@@ -1,0 +1,58 @@
+.auth {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 5rem 0;
+
+    .auth__form {
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        padding: 2rem;
+        min-width: 30rem;
+        border-radius: 1rem;
+        box-shadow: 0 0 1rem rgba(0, 0, 0, 0.1);
+        text-transform: capitalize;
+
+        h1 {
+            font-size: 2.4rem;
+            text-align: center;
+            text-decoration: underline;
+        }
+        label {
+            margin-top: 1rem;
+            color: black;
+            font-size: 1.2rem;
+            font-weight: 600;
+            
+        }
+        input {
+            border-width: 2px;
+            border-color: #b4b4b43e;
+        }
+        a {
+            margin-left: .2rem;
+            width: 100%;
+            right: 0rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #008540;
+        }
+
+        button {
+            text-align: start;
+            width: 100%;
+            flex: 1;
+        }
+        .auth__form__submit {
+            text-align: center;
+            background-color: #008540;
+            font-weight: 700;
+            margin-top: 2rem;
+        }
+    }
+}

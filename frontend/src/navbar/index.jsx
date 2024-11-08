@@ -1,21 +1,22 @@
 import { Link, Outlet } from 'react-router-dom';
 import './style.css';
+import PropTypes from 'prop-types';
 
-function Navbar() {
+function Navbar({HideListItems} = { HideListItems: false }) {
     const pagesRoute = [
         {title: 'Home', path: '/'},
         {title: 'Add Project', path: '/add-project'},
         {title: 'View Project', path: '/view-project'}
     ]
     return ( 
-        <div>
+        <div className='navbar__container'>
             <nav className="navbar navbar-expand-lg navbar-light bg-success py-3">
                 <div className="container-fluid">
                 <Link className="navbar-brand navbar__title" to="/">Project Showcase</Link>
 
                 <div className="collapse navbar-collapse">
                     <ul className="navbar-nav ml-auto">
-                        {pagesRoute.map((page, index) => (
+                        {!HideListItems && pagesRoute.map((page, index) => (
                             <li className="nav-item" key={`navbar-pageLink-${index}`}>
                                 <Link className="nav-link text-white" to={page.path}>{page.title}</Link>
                             </li>
@@ -28,5 +29,10 @@ function Navbar() {
         </div>
      );
 }
+
+Navbar.propTypes = {
+    HideListItems: PropTypes.bool
+}
+
 
 export default Navbar;

@@ -20,7 +20,11 @@ function App() {
         <Route path="/add-project" element={<AddProject />} />
         <Route path="/view-project/:id" element={<ViewProject />} />
       </Route>
-      <Route path="/auth" element={<Auth />} />
+      <Route path="/" element={<Navbar HideListItems={true} />}>
+        <Route path="/login" element={<Auth setSelectedPage={"login"} />} />
+        <Route path="/signup" element={<Auth setSelectedPage={"signup"} />} />
+        <Route path="/forget-password" element={<Auth setSelectedPage={"forget-password"} />} />
+      </Route>
     </Routes>
   )
 }

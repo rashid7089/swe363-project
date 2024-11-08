@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-function FeedbackForm() { // feedback form webpage
+function FeedbackForm() { // feedback webpage
   
   const [feedback, setFeedback] = useState(""); // State to store feedback
 
@@ -28,6 +28,7 @@ function FeedbackForm() { // feedback form webpage
   );
 }
 
+//css style sheet
 const styles = {
   container: {
     display: "flex",
