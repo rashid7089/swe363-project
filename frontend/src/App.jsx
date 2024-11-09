@@ -13,7 +13,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Navbar HideListItems={true} />}>
-        <Route path="/" element={<Auth setSelectedPage={"signup"} />} />
+        <Route path="/" element={<Auth setSelectedPage={"login"} />} />
         <Route path="/login" element={<Auth setSelectedPage={"login"} />} />
         <Route path="/signup" element={<Auth setSelectedPage={"signup"} />} />
         <Route path="/forget-password" element={<Auth setSelectedPage={"forget-password"} />} />
