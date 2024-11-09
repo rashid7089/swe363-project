@@ -25,9 +25,13 @@ function Auth({ setSelectedPage }) {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+
     }
+    
     setValidated(true);
   };
+
+
 
   return (
     <div className="auth">
