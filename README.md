@@ -1,6 +1,6 @@
 # swe363-project
 
-(Note: to enter just write in the log in page: 
+## (Note: to enter just write in the log in page: 
 email: hacker
 passwor:1 
  
