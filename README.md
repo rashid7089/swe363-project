@@ -1,4 +1,8 @@
 # swe363-project
+
+(Note: to enter just write in the log in page: 
+email: hacker
+passwor:1 
  
 # Usage Guidelines for Project Showcase Application
 
