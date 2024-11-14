@@ -1,0 +1,27 @@
+.home__noFoundMessage {
+    text-align: center;
+    color: gray;
+    margin: 3rem 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    h1 {
+        font-size: 8rem;
+        color: black;
+    }
+    height: 60vh;
+}
+
+.home__singleProject {
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (max-width: 980px) {
+    .home__noFoundMessage {
+        padding: 4rem;
+        h1 {
+            font-size: 7rem;
+        }
+    }
+}
