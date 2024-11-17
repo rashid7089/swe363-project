@@ -1,5 +1,10 @@
 # swe363-project
 
+
+## (Note: to run the front end write:)
+- cd frontend
+- npm run dev
+
 ## (Note: to enter just write in the log in page: 
 email: hacker
 passwor:1 
