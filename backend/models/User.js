@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  usertype: { type: String, enum: ['student', 'faculty'], required: true },
+  usertype: { type: String, enum: ['student', 'faculty', "other"], required: true },
 });
 
 // Create the model
