@@ -1,14 +1,15 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const User = require('../../models/User');
+const router = express.Router();
 
-router.get('/users', async (req, res) => {
-    try {
-      const users = await User.find();
-      res.status(200).json(users);
-    } catch (err) {
-      console.error('Error fetching users:', err.message);
-      res.status(500).json({ error: err.message });
-    }
+router.get('/', async (req, res) => {
+  try {
+    // Exclude the password field
+    const users = await User.find().select('-password'); 
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 module.exports = router;
