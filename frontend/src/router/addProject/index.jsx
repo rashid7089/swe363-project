@@ -31,18 +31,18 @@ function AddProject() {
       teammatesNames: teammatesNames.split(','),
       introduction,
       description,
-      images: Array.from(images).map((file) => file.name), // Just use the image name for now, can change to URL if uploading to a server
+      images: Array.from(images).map((file) => file.name), 
     };
 
     try {
-      // POST request to the backend to save the project
+      
       const response = await axios.post('http://localhost:5000/api/projects/addProject', projectData);
 
       if (response.status === 201) {
         setMessage('Project added successfully!');
         console.log('Project added:', response.data);
 
-        // Optionally reset the form after successful submission
+       
         setTitle('');
         setProjectMajor('');
         setYear('');
@@ -88,7 +88,7 @@ function AddProject() {
           <div className="form-group">
             <label>Year</label>
             <input
-              type="date"  // Changed to date input type
+              type="date"  
               className="form-control"
               value={year}
               onChange={(e) => setYear(e.target.value)}
@@ -145,7 +145,7 @@ function AddProject() {
             <input
               type="file"
               className="form-control"
-              multiple  // Allow multiple image uploads
+              multiple  
               onChange={handleImageChange}
               required
             />
