@@ -38,7 +38,7 @@ app.use(cors());
 // Routes
 app.use('/', indexRouter);
 app.use('/api/auth', authRouter);
-app.use('/api/projects', projectsRouter); // Register the route
+app.use('/api/project', projectsRouter); // Register the route
 
 // Error handler
 app.use(function (err, req, res, next) {

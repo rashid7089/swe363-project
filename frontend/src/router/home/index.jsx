@@ -4,13 +4,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import logo from './logo.jpg'; // Default logo
 import logo1 from './logo1.png'; // Alternative logo
+import { apiBaseUrl } from '../../functions/authRequests';
 
 // Static project data
-const staticProjects = [
-  { id: 1, major: "coe", year: "2023", title: 'UAV Obstacle Detection and Avoidance', company: 'TRS Technologies Inc.', img: logo1 },
-  { id: 2, major: "cs", year: "2022", title: 'Swapp – The Clothing Swapping App', company: 'Swapp', img: logo },
-  { id: 3, major: "swe", year: "2021", title: 'EDI Patio Awning Design Team 1', company: 'College of Engineering Facilities', img: logo },
-];
+
 
 function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
@@ -23,13 +20,14 @@ function ProjectShowcase() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const response = await fetch('http://localhost:8080/api/projects');
+        console.log(`${apiBaseUrl}/project/all`)
+        const response = await fetch(`${apiBaseUrl}/project/all`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         // Combine static and dynamic projects
-        const combinedProjects = [...staticProjects, ...data];
+        const combinedProjects = [ ...data];
         setProjects(combinedProjects);
         setFilteredProjects(combinedProjects);
       } catch (err) {

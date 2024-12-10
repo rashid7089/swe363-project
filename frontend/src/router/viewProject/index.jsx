@@ -2,9 +2,10 @@ import { Modal } from 'react-bootstrap';
 import './style.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { apiBaseUrl } from '../../functions/authRequests';
 
 function ViewProject() {
-    const { title } = useParams(); // Fetch the project title from the URL
+    const { id: projectId } = useParams(); // Fetch the project title from the URL
     const [project, setProject] = useState(null); // State for project data
     const [loading, setLoading] = useState(true); // State for loading indicator
     const [error, setError] = useState(null); // State for error handling
@@ -13,25 +14,20 @@ function ViewProject() {
 
     // Fetch project data based on the title
     useEffect(() => {
-        const fetchProject = async () => {
-            try {
-                const response = await fetch(`/api/project/${encodeURIComponent(title)}`); // Backend API endpoint
-                if (!response.ok) {
-                    throw new Error('Failed to fetch project data');
-                }
-                const data = await response.json();
+        fetch(`${apiBaseUrl}/project/${projectId}`)
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data)
                 setProject(data);
-                setSelectedImage(data.imagesIds[0]); // Default to the first image
                 setLoading(false);
-            } catch (err) {
-                console.error(err);
-                setError(err.message);
+                setSelectedImage(data.imagesIds[0]);
+                console.log(selectedImage)
+            })
+            .catch((err) => {
+                setError(err);
                 setLoading(false);
-            }
-        };
-
-        fetchProject();
-    }, [title]);
+            });
+    }, []);
 
     // Handle image click for modal
     const handleImageClick = (image) => {
@@ -76,7 +72,7 @@ function ViewProject() {
                 <div className="viewproject__content__topsection">
                     <div className="viewproject__content__images">
                         <img
-                            src={`/api/images/${selectedImage}`} // Backend route to serve images
+                            src={selectedImage} // Backend route to serve images
                             alt="Project main"
                             className="viewproject__content__images__mainimage"
                             onClick={handleMainImageClick}
@@ -85,7 +81,7 @@ function ViewProject() {
                             {project.imagesIds.map((imageId, index) => (
                                 <img
                                     key={index}
-                                    src={`/api/images/${imageId}`} // Backend route for thumbnails
+                                    src={imageId} // Backend route for thumbnails
                                     alt={`Project image ${index + 1}`}
                                     style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }}
                                     onClick={() => handleImageClick(imageId)}

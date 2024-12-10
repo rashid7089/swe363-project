@@ -8,9 +8,9 @@ const addProject = require('./addProject');
 const allProjects = require('./allProjects');
 
 // use routers
-router.use('/project', singleProject);
 router.use('/all', allProjects);
 router.use('/addProject', addProject);
+router.use('/', singleProject);
 
 // ========================================
 
