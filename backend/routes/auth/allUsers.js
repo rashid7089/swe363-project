@@ -5,7 +5,7 @@ const router = express.Router();
 router.get('/', async (req, res) => {
   try {
     // Exclude the password field
-    const users = await User.find().select('-password'); 
+    const users = await User.find(); 
     res.json(users);
   } catch (err) {
     res.status(500).json({ error: err.message });

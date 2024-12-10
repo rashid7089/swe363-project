@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 function Navbar({ HideListItems } = { HideListItems: false }) {
     const pagesRoute = [
         { title: 'Home', path: '/home' },
-        { title: 'Add Project', path: '/add-project' }
+        { title: 'Add Project', path: '/add-project' },
+        { title: 'My Profile', path: '/profile' }
     ];
 
     return (
@@ -16,7 +17,7 @@ function Navbar({ HideListItems } = { HideListItems: false }) {
                     <div className="collapse navbar-collapse justify-content-end">
                         <ul className="navbar-nav">
                             {!HideListItems && pagesRoute.map((page, index) => (
-                                <li className="nav-item" key={`navbar-pageLink-${index}`}>
+                                <li className="nav-item mx-2" key={`navbar-pageLink-${index}`}>
                                     <Link className="nav-link text-white" to={page.path}>{page.title}</Link>
                                 </li>
                             ))}

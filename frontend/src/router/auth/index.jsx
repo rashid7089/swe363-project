@@ -36,7 +36,7 @@ function Auth({ setSelectedPage }) {
   return (
     <div className="auth">
       {currentPageIndex === 0 && <LoginForm validated={validated} handleSubmit={handleSubmitLogin} />}
-      {currentPageIndex === 1 && <SignUpForm validated={validated} handleSubmit={handleSubmitLogin} />}
+      {currentPageIndex === 1 && <SignUpForm validated={validated} setCurrentPageIndex={setCurrentPageIndex} />}
       {currentPageIndex === 2 && <ResetPassword validated={validated} handleSubmit={handleSubmitLogin} />}
     </div>
   );

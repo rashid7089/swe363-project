@@ -22,27 +22,18 @@ connectDB()
     process.exit(1); // Exit the process if the connection fails
   });
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
 // Middleware
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
-// CORS configuration
-app.use(cors({
-  origin: 'http://localhost:5173',
-  credentials: true,
-}));
-
-// Handle favicon.ico requests
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
-// Serve static files from the 'public' directory
-app.use(express.static(path.join(__dirname, 'public')));
-
-// Set view engine as EJS
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.use(cors({
+//   origin: 'http://localhost:3000',
+//   credentials: true,
+// }));
+app.use(cors());
 
 // Routes
 app.use('/', indexRouter);
