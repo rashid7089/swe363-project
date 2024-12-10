@@ -1,4 +1,6 @@
-const apiBaseUrl = "http://localhost:8080/api/auth";
+export const apiBaseUrl = "http://localhost:8080/api";
+
+const apiBaseUrlAuth = "http://localhost:8080/api/auth";
 
 const sendRequest = async (url, method, body, token = null) => {
   const headers = { "Content-Type": "application/json" };
@@ -12,7 +14,7 @@ const sendRequest = async (url, method, body, token = null) => {
   
 
   try {
-    const response = await fetch(`${apiBaseUrl}${url}`, options);
+    const response = await fetch(`${apiBaseUrlAuth}${url}`, options);
     const data = await response.json();
     return {data, status: response.status};
   } catch (error) {
