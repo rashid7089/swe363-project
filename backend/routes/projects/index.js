@@ -1,18 +1,17 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const Project = require('../../models/Project'); // Adjust the path as necessary
 
-// ========================================
-// routers
-const singleProject = require('./singleProject');
-
-// use routers
-router.use('/project', singleProject);
-
-// ========================================
-
-/* default router */
-router.get('/', function(req, res, next) {
-  res.send('project routers');
+// Route to fetch all projects
+router.get('/', async (req, res) => {
+  try {
+    const projects = await Project.find(); // Retrieve all projects from the database
+    res.status(200).json(projects); // Send the projects as a JSON response
+  } catch (err) {
+    console.error('Error fetching projects:', err.message);
+    res.status(500).json({ error: err.message });
+  }
 });
+router.use('/project', require('./singleProject'));
 
 module.exports = router;
