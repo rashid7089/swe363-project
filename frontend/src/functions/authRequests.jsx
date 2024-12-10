@@ -23,8 +23,8 @@ const sendRequest = async (url, method, body, token = null) => {
 
 
 // POST /register
-const registerUser = (name, email, password, usertype) =>
-  sendRequest("/register", "POST", { name, email, password, usertype });
+const registerUser = (name, email, password, usertype, kfupmID) =>
+  sendRequest("/register", "POST", { name, email, password, usertype, kfupmID });
 
 
 // POST /login

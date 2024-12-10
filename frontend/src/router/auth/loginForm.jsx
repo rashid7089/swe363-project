@@ -15,15 +15,14 @@ function LoginForm({ validated }) {
         // send request
         loginUserRequest(email, password)
             .then((response) => {
+                console.log(response)
                 if (response.status === 200) {
                     localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('userId', response.data.userId);
                     navigate('/home');
                 }
-                else if (response.status === 404) {
-                    alert('Invalid email');
-                }               
-                else if (response.status === 401) {
-                    alert('Invalid password');
+                else if (response.status === 404 || response.status === 401) {
+                    alert(response.data.message);
                 }
                 else {
                     alert('An error occurred');

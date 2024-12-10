@@ -10,7 +10,7 @@ function LoginForm({ validated }) {
 
     const [form, setForm] = useState({
         name: '',
-        id: '',
+        kfupmID: '',
         email: '',
         password: '',
         rePassword: '',
@@ -25,14 +25,14 @@ function LoginForm({ validated }) {
     const handleSubmit = (e) => {
         e.preventDefault();
         // name, email, password, usertype
-        const { name, id, email, password, rePassword, usertype } = form;
+        const { name, kfupmID, email, password, rePassword, usertype } = form;
         if (password !== rePassword) {
             alert('Passwords do not match');
             return;
         }
         
         // send request
-        registerUserRequest(name, email, password, usertype)
+        registerUserRequest(name, email, password, usertype, kfupmID)
             .then((response) => {
                 console.log(response);
                 if (response.status === 201) {
@@ -62,12 +62,12 @@ function LoginForm({ validated }) {
                 <Form.Select aria-label="Default select example" size="md" type="text" name="usertype" onChange={handleChange} required >
                     <option disabled>select usertype</option>
                     <option value="student">Student</option>
-                    <option value="facility">Facility</option>
+                    <option value="faculty">Faculty</option>
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>KFUPM Id</Form.Label>
-                <Form.Control size="md" type="text" required name="id" onChange={handleChange} placeholder="your KFUPM Id" />
+                <Form.Control size="md" type="text" required name="kfupmID" onChange={handleChange} placeholder="your KFUPM Id" />
                 <Form.Control.Feedback type="invalid">
                     the id is already used
                 </Form.Control.Feedback>

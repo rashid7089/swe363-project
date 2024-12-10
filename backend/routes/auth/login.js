@@ -17,15 +17,15 @@ router.post('/', async (req, res) => {
     console.log("email: ", email);
     console.log("password: ", password);
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ errorField: "email", errorMsg: 'Email not found' });
+    if (!user) return res.status(404).json({ errorField: "email", message: 'Email not found' });
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ errorField: "password", errorMsg: 'Invalid password' });
+    if (!match) return res.status(401).json({ errorField: "password", message: 'Invalid password' });
 
     const token = jwt.sign({ userId: user._id }, 'yourSecretKey', { expiresIn: '1h' });
-    res.json({ token });
+    res.json({ token, userId:user._id });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ message: err.message });
   }
 });
 
