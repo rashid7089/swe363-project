@@ -1,34 +1,42 @@
 import Form from 'react-bootstrap/Form';
 import PropTypes from 'prop-types';
 import { Link, useNavigate } from 'react-router-dom';
+import { loginUser as loginUserRequest } from '../../functions/authRequests';
 
-const initialDatabase = [
-    { email: 'user1@example.com', password: 'Password1', status: 'senior' },
-    { email: 'user2@example.com', password: 'Password2', status: 'senior' },
-    { email: 'hacker', password: '1', status: 'senior' },
 
-];
-
-function LoginForm({ validated, handleSubmit }) {
+function LoginForm({ validated }) {
     const navigate = useNavigate();
 
-    const onSubmit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const email = e.target[0].value; // Assuming email is the first input
         const password = e.target[1].value; // Assuming password is the second input
-
-        const user = initialDatabase.find(user => user.email === email && user.password === password);
-
-        if (user) {
-            navigate('/home');
-        } else {
-            handleSubmit(e); // Call the passed handleSubmit function if you want additional logic
-            alert('Invalid email or password');
-        }
+        
+        // send request
+        loginUserRequest(email, password)
+            .then((response) => {
+                if (response.status === 200) {
+                    localStorage.setItem('token', response.data.token);
+                    navigate('/home');
+                }
+                else if (response.status === 404) {
+                    alert('Invalid email');
+                }               
+                else if (response.status === 401) {
+                    alert('Invalid password');
+                }
+                else {
+                    alert('An error occurred');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('Invalid email or password');
+            });
     };
 
     return ( 
-        <Form className="auth__form" noValidate validated={validated} onSubmit={onSubmit}>
+        <Form className="auth__form" noValidate validated={validated} onSubmit={handleSubmit}>
             <h1>Login</h1>
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>Email</Form.Label>

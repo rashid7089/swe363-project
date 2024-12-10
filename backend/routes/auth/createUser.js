@@ -1,5 +1,5 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const User = require('../../models/User');
 const validateEmail = require('../../functions/validations/validateEmail');
 const validatePassword = require('../../functions/validations/validatePassword');
@@ -24,7 +24,11 @@ router.post('/', async (req, res) => {
     await user.save();
     res.status(201).json({ message: 'User registered successfully' });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    console.log(err);
+    if (err.code === 11000) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+    else res.status(400).json({ message: err.message });
   }
 });
 
