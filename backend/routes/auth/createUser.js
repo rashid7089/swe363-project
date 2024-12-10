@@ -16,8 +16,11 @@ router.post('/', async (req, res) => {
     if (!name || !email || !password || !usertype || !kfupmID) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    if (!validateEmail(email) || !validatePassword(password)) {
-      return res.status(400).json({ message: 'Invalid email or Password' });
+    if (!validateEmail(email)) {
+      return res.status(400).json({ message: 'Invalid email' });
+    }
+    if (!validatePassword(password)) {
+      return res.status(400).json({ message: 'Invalid password. Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, one digit' });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
