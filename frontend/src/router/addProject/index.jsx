@@ -1,98 +1,171 @@
 import { useState } from 'react';
-import Form from 'react-bootstrap/Form';
+import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './addP.css';
 
 function AddProject() {
-  const [validated, setValidated] = useState(false);
   const [title, setTitle] = useState('');
-  const [teammatesN, setTeammatesN] = useState('');
-  const [teammatesM, setTeammatesM] = useState('');
-  const [projectDate, setProjectDate] = useState('');
+  const [projectMajor, setProjectMajor] = useState('');
+  const [year, setYear] = useState('');
+  const [semester, setSemester] = useState('');
+  const [teammatesNames, setTeammatesNames] = useState('');
+  const [introduction, setIntroduction] = useState('');
   const [description, setDescription] = useState('');
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [images, setImages] = useState([]); // For storing image files
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      console.log("Project submitted:", { title, teammatesN, teammatesM, projectDate, description });
-      setShowSuccess(true);
+  const handleImageChange = (event) => {
+    // Handling the selected files
+    setImages(event.target.files);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    // Prepare project data
+    const projectData = {
+      title,
+      projectMajor,
+      year,
+      semester,
+      teammatesNames: teammatesNames.split(','),
+      introduction,
+      description,
+      images: Array.from(images).map((file) => file.name), // Just use the image name for now, can change to URL if uploading to a server
+    };
+
+    try {
+      // POST request to the backend to save the project
+      const response = await axios.post('http://localhost:5000/api/projects/addProject', projectData);
+
+      if (response.status === 201) {
+        setMessage('Project added successfully!');
+        console.log('Project added:', response.data);
+
+        // Optionally reset the form after successful submission
+        setTitle('');
+        setProjectMajor('');
+        setYear('');
+        setSemester('');
+        setTeammatesNames('');
+        setIntroduction('');
+        setDescription('');
+        setImages([]);
+      }
+    } catch (error) {
+      setMessage('Error adding project');
+      console.error('Error submitting project:', error);
     }
-    setValidated(true);
   };
 
   return (
-    <div className="auth">
-      <Form className="auth__form" noValidate validated={validated} onSubmit={handleSubmit}>
-        <h1>Add a New KFUPM Senior Project</h1>
-        <Form.Group className="mb-2" controlId="formTitle">
-          <Form.Label>Title</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Please Enter The Title"
-            isInvalid={!title && validated}
-          />
-          <Form.Control.Feedback type="invalid">Title is required.</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-2" controlId="formTeammatesN">
-          <Form.Label>Teammate's Names</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            value={teammatesN}
-            onChange={(e) => setTeammatesN(e.target.value)}
-            placeholder="Comma Separated"
-            isInvalid={!teammatesN && validated}
-          />
-          <Form.Control.Feedback type="invalid">Teammate's names are required.</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-2" controlId="formTeammatesM">
-          <Form.Label>Teammate's Majors</Form.Label>
-          <Form.Control
-            type="text"
-            required
-            value={teammatesM}
-            onChange={(e) => setTeammatesM(e.target.value)}
-            placeholder="Comma Separated"
-            isInvalid={!teammatesM && validated}
-          />
-          <Form.Control.Feedback type="invalid">Teammate's majors are required.</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-2" controlId="formProjectDate">
-          <Form.Label>Project Date</Form.Label>
-          <Form.Control
-            type="date"
-            required
-            value={projectDate}
-            onChange={(e) => setProjectDate(e.target.value)}
-            isInvalid={!projectDate && validated}
-          />
-          <Form.Control.Feedback type="invalid">Project date is required.</Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-2" controlId="formDescription">
-          <Form.Label>Description</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            required
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            isInvalid={!description && validated}
-          />
-          <Form.Control.Feedback type="invalid">Description is required.</Form.Control.Feedback>
-        </Form.Group>
-        <button type="submit" className="auth__form__submit btn btn-primary">Upload The Project</button>
-        {showSuccess && (
-          <div className="alert alert-success mt-3" role="alert">
-            Project has been successfully added!
+    <div className="add-project">
+      <div className="add-project__form">
+        <h1>Add a New Project</h1>
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label>Project Title</label>
+            <input
+              type="text"
+              className="form-control"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
           </div>
-        )}
-      </Form>
+
+          <div className="form-group">
+            <label>Major</label>
+            <input
+              type="text"
+              className="form-control"
+              value={projectMajor}
+              onChange={(e) => setProjectMajor(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Year</label>
+            <input
+              type="date"  // Changed to date input type
+              className="form-control"
+              value={year}
+              onChange={(e) => setYear(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Semester</label>
+            <input
+              type="text"
+              className="form-control"
+              value={semester}
+              onChange={(e) => setSemester(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Teammates Names (comma separated)</label>
+            <input
+              type="text"
+              className="form-control"
+              value={teammatesNames}
+              onChange={(e) => setTeammatesNames(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Introduction</label>
+            <input
+              type="text"
+              className="form-control"
+              value={introduction}
+              onChange={(e) => setIntroduction(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Description</label>
+            <input
+              type="text"
+              className="form-control"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Upload Images</label>
+            <input
+              type="file"
+              className="form-control"
+              multiple  // Allow multiple image uploads
+              onChange={handleImageChange}
+              required
+            />
+            {images.length > 0 && (
+              <div className="mt-3">
+                <strong>Selected Images:</strong>
+                <ul>
+                  {Array.from(images).map((file, index) => (
+                    <li key={index}>{file.name}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+
+          <button type="submit" className="btn btn-primary mt-3">Submit Project</button>
+        </form>
+
+        {message && <div className="alert mt-3">{message}</div>}
+      </div>
     </div>
   );
 }
