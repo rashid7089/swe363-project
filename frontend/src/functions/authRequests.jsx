@@ -1,6 +1,6 @@
 export const apiBaseUrl = "http://localhost:8080/api";
 
-const apiBaseUrlAuth = "http://localhost:8080/api/auth";
+const apiBaseUrlAuth = `${apiBaseUrl}/auth`;
 
 const sendRequest = async (url, method, body, token = null) => {
   const headers = { "Content-Type": "application/json" };

@@ -12,10 +12,32 @@ import { apiBaseUrl } from '../../functions/authRequests';
 function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
   const [searchByText, setSearchText] = useState('');
+  const [allMajors, setAllMajors] = useState([]);
+  const [allYears, setAllYears] = useState([]);
   const [searchByMajor, setSearchByMajor] = useState('');
   const [searchByYear, setSearchByYear] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [isFiltersChanged, setIsFiltersChanged] = useState(false);
+
+  const getMajors = (projects) => {
+    const majors = [];
+    projects.forEach(project => {
+      if (!majors.includes(project.projectMajor)) {
+        majors.push(project.projectMajor);
+      }
+    });
+    return majors;
+  }
+
+  const getYears = (projects) => {
+    const years = [2023];
+    projects.forEach(project => {
+      if (!years.includes(project.year)) {
+        years.push(project.year);
+      }
+    });
+    return years;
+  }
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -27,15 +49,21 @@ function ProjectShowcase() {
         }
         const data = await response.json();
         // Combine static and dynamic projects
-        const combinedProjects = [ ...data];
-        setProjects(combinedProjects);
-        setFilteredProjects(combinedProjects);
+        setProjects(data);
+        setFilteredProjects(data);
+        return data;
       } catch (err) {
         console.error('Error fetching projects:', err);
       }
     };
 
-    fetchProjects();
+    fetchProjects()
+    .then((projects) => {
+      console.log('Projects fetched successfully');
+      console.log(projects);
+      setAllMajors(getMajors(projects));
+      setAllYears(getYears(projects));
+    });
   }, []);
 
   const handleSearch = (event) => {
@@ -43,7 +71,7 @@ function ProjectShowcase() {
     const results = projects.filter(project =>
       project.title.toLowerCase().includes(searchByText.toLowerCase())
     ).filter(project =>
-      project.major.toLowerCase().includes(searchByMajor.toLowerCase())
+      project.projectMajor.toLowerCase().includes(searchByMajor.toLowerCase())
     ).filter(project =>
       project.year.toString().includes(searchByYear)
     );
@@ -100,9 +128,9 @@ function ProjectShowcase() {
               onChange={(e) => onChange("major", e.target.value)}
             >
               <option value="">Major</option>
-              <option value="coe">COE</option>
-              <option value="swe">SWE</option>
-              <option value="cs">CS</option>
+              {allMajors.map((major, index) => (
+                <option key={index} value={major}>{major}</option>
+              ))}
             </select>
           </div>
           <div className="col-md-3 mb-3">
@@ -112,9 +140,9 @@ function ProjectShowcase() {
               onChange={(e) => onChange("year", e.target.value)}
             >
               <option value="">Year</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
+              {allYears.map((year, index) => (
+                <option key={index} value={year}>{year}</option>
+              ))}
             </select>
           </div>
           <div className="col-md-3 mb-3">
@@ -136,10 +164,11 @@ function ProjectShowcase() {
                 <Link to={`/view-Project/${project.id || project._id}`} className="text-decoration-none text-dark">
                   <div className="card h-100 home__singleProject">
                     <img
-                      src={project.img || logo} // Fallback to a default image if project.img is undefined
+                      src={project.imagesIds[0] || logo} // Fallback to a default image if project.img is undefined
                       className="card-img-top"
                       alt={project.title}
                       style={{ height: '200px', objectFit: 'cover' }}
+                      onError={`this.onerror=null;this.src=${logo};`}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{project.title}</h5>
