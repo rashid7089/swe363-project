@@ -117,7 +117,7 @@
 
 /* Invalid input styling */
 .form-group input:invalid {
-    border-color: red; /* Red border for invalid inputs */
+    border-color: #b4b4b43e; /* Red border for invalid inputs */
 }
 
 .form-group input:valid {
