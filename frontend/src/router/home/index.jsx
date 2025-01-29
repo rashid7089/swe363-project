@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import logo from './logo.jpg'; // Default logo
-import logo1 from './logo1.png'; // Alternative logo
 import { apiBaseUrl } from '../../functions/authRequests';
-
+import { fallback_image_URL } from '../../functions/fallbackImage';
 // Static project data
 
 
 function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
-  const [searchByText, setSearchText] = useState('');
   const [allMajors, setAllMajors] = useState([]);
   const [allYears, setAllYears] = useState([]);
+  const [searchByText, setSearchText] = useState('');
   const [searchByMajor, setSearchByMajor] = useState('');
   const [searchByYear, setSearchByYear] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
@@ -146,12 +145,12 @@ function ProjectShowcase() {
             </select>
           </div>
           <div className="col-md-3 mb-3">
-            {filteredProjects.length !== 0 || isFiltersChanged ? (
-              <button className='btn btn-success col-12' type='submit'>Search</button>
-            ) : (
-              <button className='btn btn-danger col-12' type='button' onClick={clearFilters}>Clear Filters</button>
-            )}
-          </div>
+          <div className='row m-1 justify-content-between'>
+          
+            <button disabled={filteredProjects.length === 0} className='btn btn-success col-7 col-md-6' type='submit'>Search</button>
+            <button disabled={!searchByMajor && !searchByText && !searchByYear} className='btn btn-danger col-4 col-md-5' type='button' onClick={clearFilters}>Reset</button>
+            </div>
+            </div>
         </form>
       </div>
 
@@ -164,11 +163,11 @@ function ProjectShowcase() {
                 <Link to={`/view-Project/${project.id || project._id}`} className="text-decoration-none text-dark">
                   <div className="card h-100 home__singleProject">
                     <img
-                      src={project.imagesIds[0] || logo} // Fallback to a default image if project.img is undefined
+                      src={project.imagesIds[0] || fallback_image_URL} // Fallback to a default image if project.img is undefined
                       className="card-img-top"
                       alt={project.title}
                       style={{ height: '200px', objectFit: 'cover' }}
-                      onError={`this.onerror=null;this.src=${logo};`}
+                      onError={`this.onerror=null;this.src=${fallback_image_URL};`}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{project.title}</h5>

@@ -3,6 +3,7 @@ import './style.css';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { apiBaseUrl } from '../../functions/authRequests';
+import { fallback_image_URL } from '../../functions/fallbackImage';
 
 function ViewProject() {
     const { id: projectId } = useParams(); // Fetch the project title from the URL
@@ -41,22 +42,22 @@ function ViewProject() {
     const handleClose = () => {
         setShowModal(false);
     };
-
     // If loading or error occurs
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     if (!project) return <p>Project not found</p>;
 
-    function Header({ problem, projectMajor, createdAt, teammatesNames }) {
+    function Header({ projectMajor, createdAt, teammatesNames }) {
         return (
             <div className="viewproject__header">
-                <h4>{problem}</h4>
+                <h4>{project.title}</h4>
                 <div className="d-flex justify-content-start mb-2 viewproject__header__details">
-                    <p><strong>Major:</strong> {projectMajor}</p>
-                    <p><strong>Publish Date:</strong> {new Date(createdAt).toLocaleDateString()}</p>
+                    <p><span>Major:</span> {projectMajor}</p>
+                    <p><span>Publish Date:</span> {new Date(createdAt).toLocaleDateString()}</p>
+                    <p><span>Term:</span> {project.semester}</p>
                 </div>
                 <hr className="border border-1 border-secondary border-dark" />
-                <p className="viewproject__header__contributors"><strong>Contributors:</strong></p>
+                <p className="viewproject__header__contributors"><span>Contributors:</span></p>
                 <ul className="viewproject__header__list">
                     {teammatesNames.map((name, index) => (
                         <li key={index}>{name}</li>
@@ -71,47 +72,52 @@ function ViewProject() {
             <div className="viewproject__content container mt-3">
                 <div className="viewproject__content__topsection">
                     <div className="viewproject__content__images">
-                        <img
-                            src={selectedImage} // Backend route to serve images
-                            alt="Project main"
-                            className="viewproject__content__images__mainimage"
-                            onClick={handleMainImageClick}
-                        />
+                        <div className='viewproject__content__images__mainimage__container'>
+                            <img
+                                src={selectedImage || fallback_image_URL} // Backend route to serve images
+                                alt="Project main"
+                                className="viewproject__content__images__mainimage"
+                                onClick={handleMainImageClick}
+                                onError={`this.onerror=null;this.src=${fallback_image_URL};`}
+                            />
+                        </div>
                         <div className="viewproject__content__images__smallImages">
-                            {project.imagesIds.map((imageId, index) => (
-                                <img
-                                    key={index}
-                                    src={imageId} // Backend route for thumbnails
-                                    alt={`Project image ${index + 1}`}
-                                    style={{ maxWidth: '100px', cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }}
-                                    onClick={() => handleImageClick(imageId)}
-                                />
-                            ))}
+                            {project.imagesIds.map((imageId, index) => {
+                                if (imageId) return (
+                                    <img
+                                        key={index}
+                                        src={imageId} // Backend route for thumbnails
+                                        alt={`Project image ${index + 1}`}
+                                        style={{ width: '100px', height: "100px", border:"1px solid lightGray", cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }}
+                                        onClick={() => handleImageClick(imageId)}
+                                        onError={`this.onerror=null;this.src=${fallback_image_URL};`}
+                                    />
+                                )
+                            })}
                         </div>
                     </div>
 
                     <div className="viewproject__content__rightside">
-                        <h4 className="viewproject__content__sectiontitle">{project.title}</h4>
-                        <h5><strong>Term:</strong> {project.semester}</h5>
-                        <p>{project.introduction}</p>
+                        <h4 className="viewproject__content__sectiontitle">Introduction</h4>
+                        <pre>{project.introduction}</pre>
                     </div>
                 </div>
 
                 <div>
-                    <h4 className="viewproject__content__sectiontitle">More Details</h4>
+                    <h4 className="viewproject__content__sectiontitle">Description In Depth</h4>
                     <div>
-                        <p>{project.description}</p>
+                        <pre>{project.description}</pre>
                     </div>
                 </div>
 
                 {/* Modal for displaying the enlarged image */}
-                <Modal show={showModal} onHide={handleClose} centered>
-                    <Modal.Body>
+                <Modal show={showModal} onHide={handleClose} centered size="xl">
+                    <Modal.Body >
                         <img
-                            src={`/api/images/${selectedImage}`} 
+                            src={selectedImage || fallback_image_URL} 
                             alt="Enlarged view"
                             className="img-fluid"
-                            style={{ maxWidth: '100%', height: 'auto' }}
+                            style={{ width: '100%', height: 'auto' }}
                         />
                     </Modal.Body>
                 </Modal>
@@ -122,7 +128,6 @@ function ViewProject() {
     return (
         <div className="viewproject">
             <Header
-                problem={project.introduction}
                 projectMajor={project.projectMajor}
                 createdAt={project.createdAt}
                 teammatesNames={project.teammatesNames}
