@@ -4,31 +4,65 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import logo from './logo.jpg'; // Default logo
 import { apiBaseUrl } from '../../functions/authRequests';
+import { fallback_image_URL } from '../../functions/fallbackImage';
+// Static project data
+
 
 function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
+  const [allMajors, setAllMajors] = useState([]);
+  const [allYears, setAllYears] = useState([]);
   const [searchByText, setSearchText] = useState('');
   const [searchByMajor, setSearchByMajor] = useState('');
   const [searchByYear, setSearchByYear] = useState('');
   const [filteredProjects, setFilteredProjects] = useState([]);
   const [isFiltersChanged, setIsFiltersChanged] = useState(false);
 
+  const getMajors = (projects) => {
+    const majors = [];
+    projects.forEach(project => {
+      if (!majors.includes(project.projectMajor)) {
+        majors.push(project.projectMajor);
+      }
+    });
+    return majors;
+  }
+
+  const getYears = (projects) => {
+    const years = [2023];
+    projects.forEach(project => {
+      if (!years.includes(project.year)) {
+        years.push(project.year);
+      }
+    });
+    return years;
+  }
+
   useEffect(() => {
     const fetchProjects = async () => {
       try {
+        console.log(`${apiBaseUrl}/project/all`)
         const response = await fetch(`${apiBaseUrl}/project/all`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        // Combine static and dynamic projects
         setProjects(data);
         setFilteredProjects(data);
+        return data;
       } catch (err) {
         console.error('Error fetching projects:', err);
       }
     };
 
-    fetchProjects();
+    fetchProjects()
+    .then((projects) => {
+      console.log('Projects fetched successfully');
+      console.log(projects);
+      setAllMajors(getMajors(projects));
+      setAllYears(getYears(projects));
+    });
   }, []);
 
   const handleSearch = (event) => {
@@ -36,7 +70,7 @@ function ProjectShowcase() {
     const results = projects.filter(project =>
       project.title.toLowerCase().includes(searchByText.toLowerCase())
     ).filter(project =>
-      project.major.toLowerCase().includes(searchByMajor.toLowerCase())
+      project.projectMajor.toLowerCase().includes(searchByMajor.toLowerCase())
     ).filter(project =>
       project.year.toString().includes(searchByYear)
     );
@@ -93,9 +127,9 @@ function ProjectShowcase() {
               onChange={(e) => onChange("major", e.target.value)}
             >
               <option value="">Major</option>
-              <option value="coe">COE</option>
-              <option value="swe">SWE</option>
-              <option value="cs">CS</option>
+              {allMajors.map((major, index) => (
+                <option key={index} value={major}>{major}</option>
+              ))}
             </select>
           </div>
           <div className="col-md-3 mb-3">
@@ -105,18 +139,18 @@ function ProjectShowcase() {
               onChange={(e) => onChange("year", e.target.value)}
             >
               <option value="">Year</option>
-              <option value="2023">2023</option>
-              <option value="2022">2022</option>
-              <option value="2021">2021</option>
+              {allYears.map((year, index) => (
+                <option key={index} value={year}>{year}</option>
+              ))}
             </select>
           </div>
           <div className="col-md-3 mb-3">
-            {filteredProjects.length !== 0 || isFiltersChanged ? (
-              <button className='btn btn-success col-12' type='submit'>Search</button>
-            ) : (
-              <button className='btn btn-danger col-12' type='button' onClick={clearFilters}>Clear Filters</button>
-            )}
-          </div>
+          <div className='row m-1 justify-content-between'>
+          
+            <button disabled={filteredProjects.length === 0} className='btn btn-success col-7 col-md-6' type='submit'>Search</button>
+            <button disabled={!searchByMajor && !searchByText && !searchByYear} className='btn btn-danger col-4 col-md-5' type='button' onClick={clearFilters}>Reset</button>
+            </div>
+            </div>
         </form>
       </div>
 
@@ -129,10 +163,11 @@ function ProjectShowcase() {
                 <Link to={`/view-Project/${project.id || project._id}`} className="text-decoration-none text-dark">
                   <div className="card h-100 home__singleProject">
                     <img
-                      src={project.images && project.images.length > 0 ? project.images[0] : logo} // Use the first image if available, otherwise fallback to default logo
+                      src={project.imagesIds[0] || fallback_image_URL} // Fallback to a default image if project.img is undefined
                       className="card-img-top"
                       alt={project.title}
                       style={{ height: '200px', objectFit: 'cover' }}
+                      onError={`this.onerror=null;this.src=${fallback_image_URL};`}
                     />
                     <div className="card-body">
                       <h5 className="card-title">{project.title}</h5>

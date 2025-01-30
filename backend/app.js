@@ -22,9 +22,11 @@ connectDB()
     process.exit(1); // Exit the process if the connection fails
   });
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
+
 // Middleware
+app.use(express.static(path.join(__dirname, 'dist')));
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -47,6 +49,11 @@ app.use(function (err, req, res, next) {
     error: req.app.get('env') === 'development' ? err : {},
   });
 });
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
+
 
 // Start the server
 const PORT = 8080;
