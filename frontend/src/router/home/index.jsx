@@ -3,11 +3,7 @@ import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css';
 import logo from './logo.jpg'; // Default logo
-import logo1 from './logo1.png'; // Alternative logo
 import { apiBaseUrl } from '../../functions/authRequests';
-
-// Static project data
-
 
 function ProjectShowcase() {
   const [projects, setProjects] = useState([]);
@@ -20,16 +16,13 @@ function ProjectShowcase() {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        console.log(`${apiBaseUrl}/project/all`)
         const response = await fetch(`${apiBaseUrl}/project/all`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        // Combine static and dynamic projects
-        const combinedProjects = [ ...data];
-        setProjects(combinedProjects);
-        setFilteredProjects(combinedProjects);
+        setProjects(data);
+        setFilteredProjects(data);
       } catch (err) {
         console.error('Error fetching projects:', err);
       }
@@ -136,7 +129,7 @@ function ProjectShowcase() {
                 <Link to={`/view-Project/${project.id || project._id}`} className="text-decoration-none text-dark">
                   <div className="card h-100 home__singleProject">
                     <img
-                      src={project.img || logo} // Fallback to a default image if project.img is undefined
+                      src={project.images && project.images.length > 0 ? project.images[0] : logo} // Use the first image if available, otherwise fallback to default logo
                       className="card-img-top"
                       alt={project.title}
                       style={{ height: '200px', objectFit: 'cover' }}
