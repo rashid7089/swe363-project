@@ -12,6 +12,9 @@ function ViewProject() {
     const [error, setError] = useState(null); // State for error handling
     const [showModal, setShowModal] = useState(false); // State for image modal
     const [selectedImage, setSelectedImage] = useState(null); // State for selected image
+    const [vote, setVote]=useState(0);
+    const [voteHandler, setVoteHandler]=useState(true);
+
 
     // Fetch project data based on the title
     useEffect(() => {
@@ -42,6 +45,15 @@ function ViewProject() {
     const handleClose = () => {
         setShowModal(false);
     };
+ // here the voting process starts :) 
+    const handleVoting = ()=>{
+        setVote(prevVote => prevVote + 1);
+        setVoteHandler(true)
+    }
+    if (voteHandler) return  <button className='Voting'   onClick={handleVoting}>   vot   </button>
+    else return  <button className= 'Voting'   unselectable='Already Voted'>  vot </button>
+
+    
     // If loading or error occurs
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -132,6 +144,14 @@ function ViewProject() {
                 createdAt={project.createdAt}
                 teammatesNames={project.teammatesNames}
             />
+            <p>
+                Number of Votes:{vote}
+            </p>
+            
+            <button className='Voting'
+            onClick={handleVoting}>
+                vote
+            </button>
             <Content />
         </div>
     );
