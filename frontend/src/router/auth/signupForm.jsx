@@ -17,6 +17,18 @@ function LoginForm({ validated }) {
         usertype: 'student'
     });
 
+    const fillForm = () => {
+        const random = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+        setForm({
+            name: 'Mohammed Ahmed',
+            kfupmID: `2200${random}0`,
+            email: `Mohammed${random}@gmail.com`,
+            password: `Password${random}`,
+            rePassword: `Password123`,
+            usertype: 'student'
+        });
+    }
+
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
         console.log(form);
@@ -54,12 +66,12 @@ function LoginForm({ validated }) {
             <h1>Sign Up</h1>
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>Name</Form.Label>
-                <Form.Control size="md" type="text" name="name" onChange={handleChange} required placeholder="Ahmed" />
+                <Form.Control size="md" type="text" value={form.name} name="name" onChange={handleChange} required placeholder="Ahmed" />
             </Form.Group>
 
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>User Type</Form.Label>
-                <Form.Select aria-label="Default select example" size="md" type="text" name="usertype" onChange={handleChange} required >
+                <Form.Select value={form.usertype} aria-label="Default select example" size="md" type="text" name="usertype" onChange={handleChange} required >
                     <option disabled>select usertype</option>
                     <option value="student">Student</option>
                     <option value="faculty">Faculty</option>
@@ -67,28 +79,28 @@ function LoginForm({ validated }) {
             </Form.Group>
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>KFUPM Id</Form.Label>
-                <Form.Control size="md" type="text" required name="kfupmID" onChange={handleChange} placeholder="your KFUPM Id" />
+                <Form.Control value={form.kfupmID} size="md" type="text" required name="kfupmID" onChange={handleChange} placeholder="your KFUPM Id" />
                 <Form.Control.Feedback type="invalid">
                     the id is already used
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
                 <Form.Label>Email</Form.Label>
-                <Form.Control size="md" type="email" name="email" onChange={handleChange} required placeholder="name@example.com" />
+                <Form.Control value={form.email} size="md" type="email" name="email" onChange={handleChange} required placeholder="name@example.com" />
                 <Form.Control.Feedback type="invalid">
                     the email is incorrect
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Password</Form.Label>
-                <Form.Control size="md" type="password" required name="password" onChange={handleChange} />
+                <Form.Control value={form.password} size="md" type="password" required name="password" onChange={handleChange} />
                 <Form.Control.Feedback type="invalid">
                     password must be 8 char and contain atleast 1 uppercase letter
                 </Form.Control.Feedback>
             </Form.Group>
             <Form.Group controlId="exampleForm.ControlInput1">
                 <Form.Label>Verify Password</Form.Label>
-                <Form.Control size="md" type="password" required name="rePassword" onChange={handleChange} />
+                <Form.Control value={form.rePassword} size="md" type="password" required name="rePassword" onChange={handleChange} />
                 <Form.Control.Feedback type="invalid">
                     password doesn&#39;t match
                 </Form.Control.Feedback>
@@ -101,6 +113,10 @@ function LoginForm({ validated }) {
             <Form.Group className="my-2" controlId="exampleForm.ControlInput1">
                 have an account?  <Link to='/login'>Login</Link>
             </Form.Group>
+
+            <button style={{position:'fixed', maxWidth: 100, left: 10, bottom: 10, textAlign:"center"}} type='button' className="btn btn-secondary" onClick={fillForm} >
+                auto fill
+            </button>
         </Form>
      );
 }
