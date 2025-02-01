@@ -24,7 +24,7 @@ function LoginForm({ validated }) {
             kfupmID: `2200${random}0`,
             email: `Mohammed${random}@gmail.com`,
             password: `Password${random}`,
-            rePassword: `Password123`,
+            rePassword: `Password${random}`,
             usertype: 'student'
         });
     }
