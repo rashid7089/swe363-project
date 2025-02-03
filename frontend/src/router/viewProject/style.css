@@ -125,4 +125,14 @@ pre {
     .viewproject__content__images__mainimage {
         padding: 0;
     }
+
 }
+.btn-outline-success{
+    position: fixed;
+    bottom: 10px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: auto; /* Adjust as needed */
+}
+        
