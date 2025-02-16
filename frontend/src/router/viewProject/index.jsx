@@ -13,7 +13,7 @@ function ViewProject() {
     const [showModal, setShowModal] = useState(false); // State for image modal
     const [selectedImage, setSelectedImage] = useState(null); // State for selected image
     const [vote, setVote]=useState(0);
-    const [voteHandler, setVoteHandler]=useState(true);
+    const [voteHandler, setVoteHandler]=useState(false);
 
 
     // Fetch project data based on the title
@@ -50,8 +50,8 @@ function ViewProject() {
         setVote(prevVote => prevVote + 1);
         setVoteHandler(true)
     }
-    if (voteHandler) return  <button className='Voting'   onClick={handleVoting}>   vot   </button>
-    else return  <button className= 'Voting'   unselectable='Already Voted'>  vot </button>
+   
+    
 
     
     // If loading or error occurs
@@ -67,6 +67,7 @@ function ViewProject() {
                     <p><span>Major:</span> {projectMajor}</p>
                     <p><span>Publish Date:</span> {new Date(createdAt).toLocaleDateString()}</p>
                     <p><span>Term:</span> {project.semester}</p>
+                    <p><span> Number of Votes:</span>{vote} </p>
                 </div>
                 <hr className="border border-1 border-secondary border-dark" />
                 <p className="viewproject__header__contributors"><span>Contributors:</span></p>
@@ -144,14 +145,14 @@ function ViewProject() {
                 createdAt={project.createdAt}
                 teammatesNames={project.teammatesNames}
             />
-            <p>
-                Number of Votes:{vote}
-            </p>
             
-            <button className='Voting'
-            onClick={handleVoting}>
+            
+            <button type="button"  class="btn btn-outline-success"
+            onClick={handleVoting}
+            disabled={voteHandler}>
                 vote
             </button>
+            
             <Content />
         </div>
     );
