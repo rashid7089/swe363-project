@@ -12,20 +12,18 @@ function ViewProject() {
     const [error, setError] = useState(null); // State for error handling
     const [showModal, setShowModal] = useState(false); // State for image modal
     const [selectedImage, setSelectedImage] = useState(null); // State for selected image
-    const [vote, setVote]=useState(0);
-    const [voteHandler, setVoteHandler]=useState(false);
-
+    const [vote, setVote] = useState(0);
+    const [voteHandler, setVoteHandler] = useState(false);
 
     // Fetch project data based on the title
     useEffect(() => {
         fetch(`${apiBaseUrl}/project/${projectId}`)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data)
+                console.log(data);
                 setProject(data);
                 setLoading(false);
                 setSelectedImage(data.imagesIds[0]);
-                console.log(selectedImage)
             })
             .catch((err) => {
                 setError(err);
@@ -45,18 +43,22 @@ function ViewProject() {
     const handleClose = () => {
         setShowModal(false);
     };
- // here the voting process starts :) 
-    const handleVoting = ()=>{
-        setVote(prevVote => prevVote + 1);
-        setVoteHandler(true)
-    }
-   
-    
 
-    
+    // Voting process
+    const handleVoting = () => {
+        setVote((prevVote) => prevVote + 1);
+        setVoteHandler(true);
+    };
+
+    // Generate a believable email based on the name
+    const generateEmail = (name) => {
+        const formattedName = name.toLowerCase().replace(/\s+/g, '');
+        return `${formattedName}@gmail.com`;
+    };
+
     // If loading or error occurs
     if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error}</p>;
+    if (error) return <p>Error: {error.message}</p>;
     if (!project) return <p>Project not found</p>;
 
     function Header({ projectMajor, createdAt, teammatesNames }) {
@@ -67,13 +69,21 @@ function ViewProject() {
                     <p><span>Major:</span> {projectMajor}</p>
                     <p><span>Publish Date:</span> {new Date(createdAt).toLocaleDateString()}</p>
                     <p><span>Term:</span> {project.semester}</p>
-                    <p><span> Number of Votes:</span>{vote} </p>
+                    <p><span>Number of Votes:</span> {vote}</p>
                 </div>
                 <hr className="border border-1 border-secondary border-dark" />
                 <p className="viewproject__header__contributors"><span>Contributors:</span></p>
                 <ul className="viewproject__header__list">
                     {teammatesNames.map((name, index) => (
-                        <li key={index}>{name}</li>
+                        <li key={index}>
+                            <a 
+                                href={`mailto:${generateEmail(name)}`} 
+                                className="contributor-email"
+                                title={`Email: ${generateEmail(name)}`}
+                            >
+                                {name}
+                            </a>
+                        </li>
                     ))}
                 </ul>
             </div>
@@ -85,28 +95,28 @@ function ViewProject() {
             <div className="viewproject__content container mt-3">
                 <div className="viewproject__content__topsection">
                     <div className="viewproject__content__images">
-                        <div className='viewproject__content__images__mainimage__container'>
+                        <div className="viewproject__content__images__mainimage__container">
                             <img
-                                src={selectedImage || fallback_image_URL} // Backend route to serve images
+                                src={selectedImage || fallback_image_URL}
                                 alt="Project main"
                                 className="viewproject__content__images__mainimage"
                                 onClick={handleMainImageClick}
-                                onError={`this.onerror=null;this.src=${fallback_image_URL};`}
+                                onError={(e) => e.target.src = fallback_image_URL}
                             />
                         </div>
                         <div className="viewproject__content__images__smallImages">
-                            {project.imagesIds.map((imageId, index) => {
-                                if (imageId) return (
+                            {project.imagesIds.map((imageId, index) => (
+                                imageId && (
                                     <img
                                         key={index}
-                                        src={imageId} // Backend route for thumbnails
+                                        src={imageId}
                                         alt={`Project image ${index + 1}`}
-                                        style={{ width: '100px', height: "100px", border:"1px solid lightGray", cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }}
+                                        style={{ width: '100px', height: "100px", border: "1px solid lightGray", cursor: 'pointer', marginRight: '10px', marginTop: '-10px' }}
                                         onClick={() => handleImageClick(imageId)}
-                                        onError={`this.onerror=null;this.src=${fallback_image_URL};`}
+                                        onError={(e) => e.target.src = fallback_image_URL}
                                     />
                                 )
-                            })}
+                            ))}
                         </div>
                     </div>
 
@@ -125,9 +135,9 @@ function ViewProject() {
 
                 {/* Modal for displaying the enlarged image */}
                 <Modal show={showModal} onHide={handleClose} centered size="xl">
-                    <Modal.Body >
+                    <Modal.Body>
                         <img
-                            src={selectedImage || fallback_image_URL} 
+                            src={selectedImage || fallback_image_URL}
                             alt="Enlarged view"
                             className="img-fluid"
                             style={{ width: '100%', height: 'auto' }}
@@ -146,11 +156,13 @@ function ViewProject() {
                 teammatesNames={project.teammatesNames}
             />
             
-            
-            <button type="button"  class="btn btn-outline-success"
-            onClick={handleVoting}
-            disabled={voteHandler}>
-                vote
+            <button 
+                type="button"  
+                className="btn btn-outline-success"
+                onClick={handleVoting}
+                disabled={voteHandler}
+            >
+                Vote
             </button>
             
             <Content />
