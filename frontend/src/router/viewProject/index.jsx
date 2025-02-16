@@ -12,6 +12,9 @@ function ViewProject() {
     const [error, setError] = useState(null); // State for error handling
     const [showModal, setShowModal] = useState(false); // State for image modal
     const [selectedImage, setSelectedImage] = useState(null); // State for selected image
+    const [vote, setVote]=useState(0);
+    const [voteHandler, setVoteHandler]=useState(false);
+
 
     // Fetch project data based on the title
     useEffect(() => {
@@ -42,6 +45,15 @@ function ViewProject() {
     const handleClose = () => {
         setShowModal(false);
     };
+ // here the voting process starts :) 
+    const handleVoting = ()=>{
+        setVote(prevVote => prevVote + 1);
+        setVoteHandler(true)
+    }
+   
+    
+
+    
     // If loading or error occurs
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
@@ -55,6 +67,7 @@ function ViewProject() {
                     <p><span>Major:</span> {projectMajor}</p>
                     <p><span>Publish Date:</span> {new Date(createdAt).toLocaleDateString()}</p>
                     <p><span>Term:</span> {project.semester}</p>
+                    <p><span> Number of Votes:</span>{vote} </p>
                 </div>
                 <hr className="border border-1 border-secondary border-dark" />
                 <p className="viewproject__header__contributors"><span>Contributors:</span></p>
@@ -132,6 +145,14 @@ function ViewProject() {
                 createdAt={project.createdAt}
                 teammatesNames={project.teammatesNames}
             />
+            
+            
+            <button type="button"  class="btn btn-outline-success"
+            onClick={handleVoting}
+            disabled={voteHandler}>
+                vote
+            </button>
+            
             <Content />
         </div>
     );
